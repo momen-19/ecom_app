@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:posts_app/features/auth/models/user_model.dart';
 
 TextEditingController nameController = TextEditingController();
 TextEditingController phoneController = TextEditingController();
@@ -17,3 +18,17 @@ bool checkEmptyField() {
   }
   return false;
 }
+
+final obText = StateProvider<bool>((ref) => true);
+
+final register = StateProvider<void>((ref) {
+  if (checkEmptyField()) {
+    UserModel(
+      phone: phoneController.text,
+      email: emailController.text,
+      image: imageController.text,
+      name: nameController.text,
+      password: passwordController.text,
+    );
+  }
+});

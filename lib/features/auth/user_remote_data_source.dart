@@ -13,7 +13,7 @@ abstract class UserRemoteDataSource {
 
 
   @POST('/users')
-  Future<void> addUser(@Body() UserModel userModel);
+  Future<void> register(@Body() UserModel userModel);
 
 }
 

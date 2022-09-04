@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:posts_app/features/auth/user_controller.dart';
 import 'package:posts_app/features/auth/widgets/rich_text_widget.dart';
 import 'package:posts_app/features/auth/widgets/text_form_field_widget.dart';
@@ -7,8 +11,7 @@ import 'package:posts_app/theme/colors.dart';
 import 'package:posts_app/widgets/button_app_widget.dart';
 import 'package:posts_app/widgets/api_helper.dart';
 
-class FormWidget extends StatelessWidget  with ApiHelper{
-
+class FormWidget extends ConsumerWidget with ApiHelper {
   String title;
   void Function() onPressed;
 
@@ -19,10 +22,17 @@ class FormWidget extends StatelessWidget  with ApiHelper{
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    bool obscureText = false;
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool obscureText = ref.read(obText.state).state;
+    final imagePicker = ImagePicker();
+    uploadImage() async {
+      final XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
+    }
+
     return Form(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             height: 30.h,
@@ -59,19 +69,20 @@ class FormWidget extends StatelessWidget  with ApiHelper{
             child: TextField(
               controller: passwordController,
               keyboardType: TextInputType.text,
-              obscureText: true,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.password_outlined),
-                suffixIcon: GestureDetector(
-                  onTap: (){
-                    obscureText =! obscureText;
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    ref.read(obText.state).state != true;
                   },
-                  child: const Icon(Icons.remove_red_eye_outlined),
+                  icon: const Icon(Icons.remove_red_eye_outlined),
                 ),
-                label: const Text('Password',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),),
+                label: const Text(
+                  'Password',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
                 contentPadding: EdgeInsets.only(left: 10.w),
                 border: const OutlineInputBorder(
                   borderSide: BorderSide(
@@ -79,11 +90,13 @@ class FormWidget extends StatelessWidget  with ApiHelper{
                   ),
                 ),
                 focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                    ),),
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                  ),
+                ),
                 hintText: 'Password',
               ),
+              obscureText: obscureText,
             ),
           ),
           TextFormFieldWidget(
@@ -95,29 +108,43 @@ class FormWidget extends StatelessWidget  with ApiHelper{
             height: 50.h,
             label: 'Phone',
           ),
-          SizedBox(
-            height: 240.h,
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  uploadImage();
+                },
+                icon: const Icon(
+                  Icons.image_outlined,
+                ),
+              ),
+              const Text('Select your Profile Image'),
+            ],
           ),
-          ButtonAppWidget(
-            colorButton: ColorManger.defaultColor,
-            onPressed: () {
-              if (checkEmptyField()) {
-                Text(123.toString());
-              }
-              showSnackBar(context, error: false, message: 'Please enter correct data');
-            },
-            width: 220.w,
-            height: 50.h,
-            radius: 30,
-            text: 'Sign Up',
-            borderColor: ColorManger.defaultColor,
+          SizedBox(
+            height: 180.h,
+          ),
+          Center(
+            child: ButtonAppWidget(
+              colorButton: ColorManger.defaultColor,
+              onPressed: () {
+                ref.watch(register);
+              },
+              width: 220.w,
+              height: 50.h,
+              radius: 30,
+              text: 'Sign Up',
+              borderColor: ColorManger.defaultColor,
+            ),
           ),
           SizedBox(
             height: 15.h,
           ),
-          RichTextWidget(
-            textA: 'Already have an account?',
-            textB: 'Sign In',
+          Center(
+            child: RichTextWidget(
+              textA: 'Already have an account?',
+              textB: 'Sign In',
+            ),
           ),
         ],
       ),
