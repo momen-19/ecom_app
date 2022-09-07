@@ -12,3 +12,4 @@ Map<String, Widget Function(BuildContext)> routes =  {
 };
 
 const initialRoute = '/splash_screen';
+

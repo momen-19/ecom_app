@@ -13,7 +13,8 @@ bool checkEmptyField() {
       phoneController.text.isNotEmpty &&
       passwordController.text.isNotEmpty &&
       imageController.text.isNotEmpty &&
-      emailController.text.isNotEmpty) {
+      emailController.text.isNotEmpty)
+  {
     return true;
   }
   return false;

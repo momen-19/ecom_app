@@ -11,10 +11,8 @@ part 'user_remote_data_source.g.dart';
 abstract class UserRemoteDataSource {
   factory UserRemoteDataSource(Dio dio, {String baseUrl}) = _UserRemoteDataSource;
 
-
   @POST('/users')
   Future<void> register(@Body() UserModel userModel);
-
 }
 
 final usersRemoteDataSource = Provider<UserRemoteDataSource>(

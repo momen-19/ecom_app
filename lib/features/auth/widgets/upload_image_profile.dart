@@ -13,19 +13,29 @@ class UploadImageProfile extends StatefulWidget {
 }
 
 class _UploadImageProfileState extends State<UploadImageProfile> {
+  File? _image;
+  PickedFile? _pickedFile;
+  final _picker = ImagePicker();
+
+  Future<void> _pickImage() async {
+    _pickedFile = await _picker.getImage(source: ImageSource.gallery);
+    if (_pickedFile != null) {
+      setState(() {
+        _image = File([], _pickedFile!.path);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         IconButton(
-          onPressed: () {
-
-          },
+          onPressed: () => _pickImage,
           icon: const Icon(
             Icons.image_outlined,
           ),
         ),
-        const Text('Select your Profile Image'),
       ],
     );
   }
