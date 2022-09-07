@@ -44,6 +44,7 @@ class OutBoardingScreen extends StatelessWidget {
               children: [
                 ButtonAppWidget(
                   onPressed: () {
+                    print('object');
                     Navigator.pushNamed(context, '/register_screen');
                   },
                   height: 50.h,

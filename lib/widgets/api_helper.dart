@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 mixin ApiHelper{
-  void showSnackBar(BuildContext context , {required bool error,required String message}){
+  static void showSnackBar(BuildContext context , {required bool error,required String message}){
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         elevation: 0,

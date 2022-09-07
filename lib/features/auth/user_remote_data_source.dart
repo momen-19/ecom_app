@@ -9,15 +9,18 @@ part 'user_remote_data_source.g.dart';
 
 @RestApi()
 abstract class UserRemoteDataSource {
-  factory UserRemoteDataSource(Dio dio, {String baseUrl}) = _UserRemoteDataSource;
+  factory UserRemoteDataSource(Dio dio, {String baseUrl}) =
+      _UserRemoteDataSource;
 
   @POST('/register')
-  Future<void> register(@Body() UserModel userModel);
+  Future<dynamic> register(@Body() UserModel userModel);
 }
-
 
 final usersRemoteDataSource = Provider<UserRemoteDataSource>(
   (ref) => UserRemoteDataSource(
     ref.read(dio),
   ),
 );
+final userRemoteDataSource = Provider<UserRemoteDataSource>((ref) {
+  return UserRemoteDataSource(ref.read(dio));
+});
