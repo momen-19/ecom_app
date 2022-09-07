@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,12 +22,6 @@ class FormWidget extends ConsumerWidget with ApiHelper {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool obscureText = ref.read(obText.state).state;
-    final imagePicker = ImagePicker();
-    uploadImage() async {
-      final XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
-    }
-
     return Form(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -71,12 +64,6 @@ class FormWidget extends ConsumerWidget with ApiHelper {
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.password_outlined),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    ref.read(obText.state).state != true;
-                  },
-                  icon: const Icon(Icons.remove_red_eye_outlined),
-                ),
                 label: const Text(
                   'Password',
                   style: TextStyle(
@@ -96,7 +83,7 @@ class FormWidget extends ConsumerWidget with ApiHelper {
                 ),
                 hintText: 'Password',
               ),
-              obscureText: obscureText,
+              obscureText: true,
             ),
           ),
           TextFormFieldWidget(
@@ -112,7 +99,7 @@ class FormWidget extends ConsumerWidget with ApiHelper {
             children: [
               IconButton(
                 onPressed: () {
-                  uploadImage();
+
                 },
                 icon: const Icon(
                   Icons.image_outlined,
@@ -128,7 +115,6 @@ class FormWidget extends ConsumerWidget with ApiHelper {
             child: ButtonAppWidget(
               colorButton: ColorManger.defaultColor,
               onPressed: () {
-                ref.watch(register);
               },
               width: 220.w,
               height: 50.h,

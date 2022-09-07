@@ -1,29 +1,27 @@
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UploadImageProfile extends StatefulWidget {
-  const UploadImageProfile({
+class ImageProfileUploader extends StatefulWidget {
+  const ImageProfileUploader({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<UploadImageProfile> createState() => _UploadImageProfileState();
+  State<ImageProfileUploader> createState() => _ImageProfileUploaderState();
 }
 
-class _UploadImageProfileState extends State<UploadImageProfile> {
-  File? _image;
+class _ImageProfileUploaderState extends State<ImageProfileUploader> {
   PickedFile? _pickedFile;
   final _picker = ImagePicker();
-
   Future<void> _pickImage() async {
     _pickedFile = await _picker.getImage(source: ImageSource.gallery);
     if (_pickedFile != null) {
       setState(() {
-        _image = File([], _pickedFile!.path);
+        _pickedFile = _pickedFile;
       });
     }
+    //print("Image picker error ");
   }
 
   @override
@@ -31,7 +29,7 @@ class _UploadImageProfileState extends State<UploadImageProfile> {
     return Row(
       children: [
         IconButton(
-          onPressed: () => _pickImage,
+          onPressed: _pickImage,
           icon: const Icon(
             Icons.image_outlined,
           ),
