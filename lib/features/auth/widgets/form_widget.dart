@@ -22,6 +22,10 @@ class FormWidget extends ConsumerWidget with ApiHelper {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController phoneController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
     return Form(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -99,7 +103,6 @@ class FormWidget extends ConsumerWidget with ApiHelper {
             children: [
               IconButton(
                 onPressed: () {
-
                 },
                 icon: const Icon(
                   Icons.image_outlined,
