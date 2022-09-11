@@ -22,12 +22,11 @@ class RegistrationState with _$RegistrationState {
 
   const RegistrationState._();
 
-  factory RegistrationState.initial() => RegistrationState(
-      nameFieldState: TextFieldState.initial(),
-      phoneFieldState: TextFieldState.initial(),
-      passwordFieldState: TextFieldState.initial(),
-      emailFieldState: TextFieldState.initial(),
-      registerButtonState: ButtonState.normal());
+TextEditingController nameController = TextEditingController();
+TextEditingController phoneController = TextEditingController();
+TextEditingController imageController = TextEditingController();
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
 
   RegistrationState loading() => copyWith(
       requestError: null,
